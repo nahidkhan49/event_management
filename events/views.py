@@ -41,8 +41,10 @@ def organizer_dashboard(request):
         events=base_query.filter(date=today)
     elif type == 'total':
         events=base_query.all()
-    elif type == 'participant':
-        events = Participant.objects.all() 
+    else:
+        events = base_query.all()
+    # elif type == 'participant':
+    #     events = Participant.objects.all() 
         
     context={
         'events':events,
@@ -100,3 +102,39 @@ def event_delete(request,id):
         
     return redirect("event_list")    
 
+def category_create(request):
+    event_form=CategoryModelForm()
+    
+    if request.method == 'POST':
+        event_form=CategoryModelForm(request.POST)
+        if event_form.is_valid():
+            event_form.save()
+            messages.success(request,"Category Created Successfully")
+            return redirect("organizer_dashboard")
+        
+    return render(request,'events/form.html',{
+        "event_form":event_form,
+        "title":"Category"
+    })
+    
+    
+def participant_create(request,event_id):
+    event=Event.objects.get(id=event_id)
+    event_form = ParticipantModelForm()
+    # event_form = ParticipantModelForm(initial={'event': [event.id]})
+    if request.method == 'POST':
+        event_form=ParticipantModelForm(request.POST or None, initial={'event':[event]})
+        if event_form.is_valid():
+            participant = event_form.save(commit=False)
+            participant.save()
+            participant.event.set([event])
+            messages.success(request,"participant added Successfully")
+            return redirect("organizer_dashboard")
+        
+    return render(request,'events/form.html',{
+        "event_form":event_form,
+        "title":f"Participant of {event.name}"
+    })
+    
+
+    

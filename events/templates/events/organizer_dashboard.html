@@ -81,6 +81,12 @@
             <i class="fa-solid fa-clock text-gray-500"></i>
             {{ event.time }}
         </p>
+        {% if event.id %}
+        <a href="{% url 'participant_create' event.id %}" class="text-yellow-600 hover:underline">
+            Add Participant
+        </a>
+        {% endif %}
+        
     </div>
     {% empty %}
     <p>No events today.</p>
