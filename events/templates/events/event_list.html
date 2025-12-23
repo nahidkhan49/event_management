@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">All Events</h1>
+        <a href="{% url 'event_create' %}"
+           class="bg-rose-500 text-white px-5 py-2 rounded-lg hover:bg-rose-600 transition">
+            + Add Event
+        </a>
+    </div>
+
+    
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full border border-gray-200">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Event Name</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Category</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Date</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">time</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Location</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">Participants</th>
+                    <th class="px-4 py-3 text-center text-sm font-semibold">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for event in events %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium text-gray-800">
+                        {{ event.name }}
+                    </td>
+                    <td class="px-4 py-3">
+                        {{ event.category.name }}
+                    </td>
+                    <td class="px-4 py-3">
+                        {{ event.date }}
+                    </td>
+                    <td class="px-4 py-3">
+                        {{ event.time }}
+                    </td>
+                    <td class="px-4 py-3">
+                        {{ event.location }}
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="bg-rose-100 text-rose-600 px-3 py-1 rounded-full text-sm">
+                            {{ event.participants.count }}
+                        </span>
+                    </td>
+
+                    <td class="px-4 py-3 text-center space-x-2">
+                         <a href="{% url 'event_update' event.id %}" 
+                            class="text-yellow-600 hover:underline">
+                            Edit
+                        </a>
+
+                          <form action="{% url 'event_delete' event.id %}" method="POST"
+                              class="inline">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    onclick="return confirm('Are you sure?')"
+                                    class="text-red-600 hover:underline">
+                                Delete
+                            </button>
+                        </form> 
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-6 text-gray-500">
+                        No events found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

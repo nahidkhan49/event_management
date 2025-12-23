@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+    Organizer Dashboard
+</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8">
+
+    <a href="?type=total">
+        <div class="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+            <i class="fa-solid fa-calendar-days text-rose-500 text-3xl mb-2"></i>
+            <h3 class="text-gray-500">Total Events</h3>
+            <p class="text-2xl font-bold">{{ counts.total }}</p>
+        </div>
+    </a>
+
+    <a href="?type=participant">
+        <div class="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+            <i class="fa-solid fa-users text-blue-500 text-3xl mb-2"></i>
+            <h3 class="text-gray-500">Total Participants</h3>
+            <p class="text-2xl font-bold">{{ total_participant }}</p>
+        </div>
+    </a>
+
+    <a href="?type=upcoming">
+        <div class="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+            <i class="fa-solid fa-clock text-green-500 text-3xl mb-2"></i>
+            <h3 class="text-gray-500">Upcoming Events</h3>
+            <p class="text-2xl font-bold">{{ counts.upcoming }}</p>
+        </div>
+    </a>
+
+    <a href="?type=past">
+        <div class="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+            <i class="fa-solid fa-calendar-xmark text-gray-500 text-3xl mb-2"></i>
+            <h3 class="text-gray-500">Past Events</h3>
+            <p class="text-2xl font-bold">{{ counts.past }}</p>
+        </div>
+    </a>
+
+    <a href="?type=today">
+        <div class="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+            <i class="fa-solid fa-bolt text-yellow-500 text-3xl mb-2"></i>
+            <h3 class="text-gray-500">Today Events</h3>
+            <p class="text-2xl font-bold">{{ counts.today }}</p>
+        </div>
+    </a>
+
+</div>
+
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+   
+
+    {% if type == "upcoming" %} Upcoming Events 
+    {% elif type == "past" %} Past Events
+    {% elif type == "today" %} Today Events 
+    {% elif type == "participant" %} Total Participants
+    {% else %} Total Events {% endif %}
+</h3>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for event in events %}
+    <div class="bg-white p-4 rounded shadow hover:shadow-lg transition">
+        <h4 class="font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-calendar-check text-rose-500"></i>
+            {{ event.name }}
+        </h4>
+
+        <p class="text-sm flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-gray-500"></i>
+            {{ event.location }}
+        </p>
+
+        <p class="text-sm flex items-center gap-2">
+            <i class="fa-solid fa-calendar text-gray-500"></i>
+            {{ event.date }}
+        </p>
+
+        <p class="text-sm flex items-center gap-2">
+            <i class="fa-solid fa-clock text-gray-500"></i>
+            {{ event.time }}
+        </p>
+    </div>
+    {% empty %}
+    <p>No events today.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

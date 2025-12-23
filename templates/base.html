@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Management System</title>
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body class="bg-gray-100">
+
+    
+    <nav class="bg-rose-500 text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between">
+            <a href="{% url 'home' %}" >
+            <h1 class="text-xl font-bold">Event Management</h1>
+            </a>
+            <div class="space-x-4">
+                <a href="{% url 'home' %}" class="hover:underline">Home</a>
+                <a href="{% url 'event_list' %}" class="hover:underline">Events</a>
+                <a href="{% url 'organizer_dashboard' %}" class="hover:underline">Dashboard</a>
+               
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="max-w-7xl mx-auto mt-4 px-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-3 rounded
+                    {% if message.tags == 'success' %} bg-green-100 text-green-700
+                    {% elif message.tags == 'error' %} bg-red-100 text-red-700
+                    {% else %} bg-blue-100 text-blue-700 {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+  
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

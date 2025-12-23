@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow">
+    <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="px-2 py-1 {% if message.tags == 'success' %}bg-green-500{% endif %} ">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    
+    <h2 class="text-2xl font-semibold mb-4 text-gray-700">
+        {% if event_form.instance.id %}
+            Update {{ title }}
+        {% else %}
+            Create {{ title }}
+        {% endif %}
+    </h2>
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ event_form.as_p }}
+
+        <button type="submit"
+            class="px-4 py-2 rounded bg-rose-500 text-white hover:bg-rose-600">
+            {% if event_form.instance.id %}
+                Update
+            {% else %}
+                Save
+            {% endif %}
+        </button>
+
+    </form>
+</div>
+
+{% endblock %}

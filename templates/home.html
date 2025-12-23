@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Event Manager{% endblock %}
+
+{% block content %}
+
+
+{% load static %}
+
+<section class="relative h-[600px] rounded-md overflow-hidden mb-14">
+    <img src="{% static 'images/banner.jpg' %}"
+         class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="absolute inset-0 bg-black/30"></div>
+
+    <div class="relative z-10 h-full flex items-center justify-end px-10">
+        <div class="text-white max-w-2xl text-rignt">
+            <h1 class="text-4xl font-bold mb-4">
+                Event Management System
+            </h1>
+
+            <p class="mb-6 text-lg">
+                Manage events, participants and categories with ease.
+            </p>
+
+            <a href="{% url 'event_list' %}"
+               class="inline-block bg-rose-500 px-6 py-3 rounded-lg hover:bg-rose-600">
+                View Events
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="bg-rose-500 rounded-xl p-6 mb-14 text-white">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+
+        <div>
+            <h3 class="text-xl font-bold mb-2">Featured Event</h3>
+            <p class="text-sm">
+                Don't miss the biggest conference of the year
+            </p>
+        </div>
+
+        <div class="flex gap-4 text-center">
+            <div class="bg-black/20 px-4 py-2 rounded">
+                <p class="text-2xl font-bold">33</p>
+                <span class="text-xs">Days</span>
+            </div>
+            <div class="bg-black/20 px-4 py-2 rounded">
+                <p class="text-2xl font-bold">12</p>
+                <span class="text-xs">Hours</span>
+            </div>
+            <div class="bg-black/20 px-4 py-2 rounded">
+                <p class="text-2xl font-bold">40</p>
+                <span class="text-xs">Minutes</span>
+            </div>
+        </div>
+
+        
+
+    </div>
+</section>
+
+
+
+<section class="mb-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+
+      
+        <div class="bg-white rounded-xl shadow p-6">
+            <div class="text-rose-500 text-4xl mb-4">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <h4 class="font-bold mb-2">Event Planning</h4>
+            <p class="text-sm text-gray-500">
+                Plan and manage events easily.
+            </p>
+        </div>
+
+       
+        <div class="bg-white rounded-xl shadow p-6">
+            <div class="text-rose-500 text-4xl mb-4">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h4 class="font-bold mb-2">Great Location</h4>
+            <p class="text-sm text-gray-500">
+                Choose best venues.
+            </p>
+        </div>
+
+       
+        <div class="bg-white rounded-xl shadow p-6">
+            <div class="text-rose-500 text-4xl mb-4">
+                <i class="fa-solid fa-microphone-lines"></i>
+            </div>
+            <h4 class="font-bold mb-2">Top Speakers</h4>
+            <p class="text-sm text-gray-500">
+                Professional speakers.
+            </p>
+        </div>
+
+        
+        <div class="bg-white rounded-xl shadow p-6">
+            <div class="text-rose-500 text-4xl mb-4">
+                <i class="fa-solid fa-champagne-glasses"></i>
+            </div>
+            <h4 class="font-bold mb-2">Fun Events</h4>
+            <p class="text-sm text-gray-500">
+                Enjoy memorable moments.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<h2 class="text-xl font-bold mb-2">All Events</h2>
+{% if events %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    {% for event in events %}
+    <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+
+        <div class="flex justify-between items-start mb-2">
+            <h3 class="text-xl font-semibold text-gray-800">
+                {{ event.name }}
+            </h3>
+        </div>
+        <p class="text-sm text-gray-500 mb-2">
+            <i class="fas fa-map-marker-alt"></i> {{ event.location }}
+        </p>
+        <p class="text-sm text-gray-500 mb-3">
+            <i class="fas fa-calendar-alt"></i> {{ event.date }} | <i class="fas fa-clock"></i> {{ event.time }}
+        </p>
+        <p class="text-sm text-gray-600 mb-4">
+            {{ event.description}}
+        </p>
+        
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+
+<section class="bg-gray-50 rounded-xl p-12 mt-24 text-center">
+    <img  src="{% static 'images/nahid.png' %}"
+         class="w-30 h-20 rounded-full mx-auto mb-4">
+
+    <p class="text-gray-600 italic mb-4">
+        “This event management system is very easy to use and powerful.”
+    </p>
+
+    <h4 class="font-bold">Nahidul Islam</h4>
+    <span class="text-sm text-gray-500">Event Organizer</span>
+</section>
+
+
+
+
+
+<footer class="bg-gray-900 text-gray-300 mt-24">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+        
+        <div>
+            <h3 class="text-2xl font-bold text-white mb-4">
+                EventManager
+            </h3>
+            <p class="text-gray-400">
+                A simple and powerful event management system by Md Nahidul Islam.
+            </p>
+        </div>
+
+        
+        <div>
+            <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+                <li><a href="/" class="hover:text-white">Home</a></li>
+                <li><a href="{% url 'event_list' %}" class="hover:text-white">Events</a></li>
+                
+        </div>
+
+
+        <div>
+            <h4 class="text-lg font-semibold text-white mb-4">Contact</h4>
+            <p>Email: nahid822399@gmail.com</p>
+            <p>Phone: +880 1719 822399</p>
+        </div>
+
+    </div>
+
+    <div class="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
+        ©  Nahidul Islam. All rights reserved.
+    </div>
+</footer>
+
+
+{% endblock %}
